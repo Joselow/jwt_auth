@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 import DbLocal from 'db-local'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -26,7 +28,9 @@ export class UserRepository {
       password: passwordHashed
     }).save()
 
-    return id
+    const token = jwt.sign({ username, id }, process.env.SECRET_KEY, { expiresIn: '1h' })
+
+    return token
   }
 
   static async login ({ username, password }) {
@@ -39,9 +43,9 @@ export class UserRepository {
     if (!credentialsValid) throw new Error('credentials invalid')
 
     const token = jwt.sign({
-      username: userFound.username, _id: userFound._id
+      username: userFound.username, id: userFound._id
     }, process.env.SECRET_KEY, { expiresIn: '1h' })
 
-    return { token }
+    return token
   }
 }
