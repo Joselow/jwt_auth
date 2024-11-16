@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { ACCESS_TOKEN_NAME } from './constants/index.js'
+import { ACCESS_TOKEN_NAME } from '../constants/index.js'
 
 export const isAuthenticated = (req, res, next) => {
   const token = req.cookies[ACCESS_TOKEN_NAME]

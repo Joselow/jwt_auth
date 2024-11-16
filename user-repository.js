@@ -34,7 +34,6 @@ export class UserRepository {
   }
 
   static async login ({ username, password }) {
-    if (!username || !password) throw Error('both fields are required')
     const userFound = UserSchema.findOne({ username })
 
     if (!userFound) throw new Error('credentiasl invalid')
